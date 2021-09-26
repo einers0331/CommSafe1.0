@@ -52,14 +52,14 @@ public class Post
         return this.multimedia;
     }
     
-    public void showPost(){
+    public String showPost(){
         String info = "---------------------------------------------------------- \n";
         info +=  identificador + " |      " + nombreC + "|"+"    "+ ubicacion +"      |      " + datetime + " |\n";
         info += "---------------------------------------------------------- \n\n";
-        info += descripcion + "\n\n";
+        info += "  "+descripcion + "\n\n";
         if(multimedia != null){
             info += multimedia;
         }
-        System.out.println(info + "\n");
+        return info + "\n";
     }
 }
