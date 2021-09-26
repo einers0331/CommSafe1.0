@@ -206,11 +206,13 @@ public class CommSafe
                                                                             break;
                                                                         default:
                                                                             System.out.println("Escriba una opción valida");
+                                                                            inputString("Presione cualquier tecla para volver");                                            
+                                                                            clrscr();
                                                                             break;
                                                                     }
                                                                 }
                                                                 break;
-                                                            case "3":
+                                                            case "3":// modificar datos perfil
                                                                 String opcstr = "Que dato desea modificar: \n";
                                                                 opcstr += "1. nombre \n";
                                                                 opcstr += "2. apellido \n";
@@ -220,7 +222,9 @@ public class CommSafe
                                                                 opcstr += "6. dirección \n";
                                                                 opcstr += "7. ciudad \n";
                                                                 opcstr += "8. foto \n";
+
                                                                 String opc  = inputString(opcstr);
+                                                                clrscr();
 
                                                                 cp = null;
                                                                 for (Ciudadano oper11 : sesion.keySet()) 
@@ -232,28 +236,28 @@ public class CommSafe
 
                                                                 }
                                                                 switch(opc){
-                                                                    case "1":
+                                                                    case "1":// cambiar nombre
                                                                         cp.setNombre(inputString("Ingrese el nombre:"));
                                                                         break;
-                                                                    case "2":
+                                                                    case "2":// cambiar apellido
                                                                         cp.setApellido(inputString("Ingrese el apellido:"));
                                                                         break;
-                                                                    case "3":
+                                                                    case "3":// cambiar contasena
                                                                         cp.setContrasena(inputString("Ingrese la contraseña:"));
                                                                         break;
-                                                                    case "4":
+                                                                    case "4":// cambiar cedula
                                                                         cp.setCedula(inputInt("Ingrese la cedula:"));
                                                                         break;
-                                                                    case "5":
+                                                                    case "5":// cambiar celular
                                                                         cp.setCelular(inputInt("Ingrese su número de celular:"));
                                                                         break;
-                                                                    case "6":
+                                                                    case "6":// cambiar direccion
                                                                         cp.setDireccion(inputString("Ingrese su dirección:"));
                                                                         break;
-                                                                    case "7":
+                                                                    case "7":// cambiar ciudad
                                                                         cp.setCiudad(inputString("Ingrese su ciudad:"));
                                                                         break;
-                                                                    case "8":
+                                                                    case "8":// cambiar foto
                                                                         cp.setFoto(inputString("Ingrese la ruta del archivo:"));
                                                                         break;
 
@@ -263,6 +267,11 @@ public class CommSafe
                                                                 verperfil = false;
 
                                                                 break;
+
+                                                            default:
+                                                                System.out.println("Elija una opcion entre 1 y 4");
+                                                                inputString("Presione cualquier tecla para volver");                                            
+                                                                clrscr();
 
                                                         }
 
@@ -277,6 +286,11 @@ public class CommSafe
                                                     s = false;
 
                                                     break;
+                                                default:
+                                                    System.out.println("Elija una opcion entre 1 y 4");
+                                                    inputString("Presione cualquier tecla para volver");                                            
+                                                    clrscr();
+
                                             }
                                         }
                                     }
@@ -334,6 +348,9 @@ public class CommSafe
                     case "4":  //Salir
                         inicio = false;
                         break;
+                    default:
+                        System.out.println("Elija una opcion entre 1 y 4");
+
                 }
             }
             catch(Exception e){
