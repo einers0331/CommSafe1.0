@@ -23,6 +23,12 @@ public class CommSafe
                 Runtime.getRuntime().exec("clear");
         } catch (IOException | InterruptedException ex) {}
     }
+    
+    public static String inputString(String str){
+        System.out.println(str);
+        Scanner myObj = new Scanner(System.in);
+        return myObj.nextLine();
+    }
 
     public static void main(String[] args) 
     {
@@ -35,36 +41,33 @@ public class CommSafe
         while(inicio)
         {
             try{
-                System.out.println("CommSafe");
-                System.out.println("Bienvenido Ciudadano");
-                System.out.println("1. Iniciar Sesion\n2. Olvide mi contraseña \n3. Registro \n4. Salir");
+                String st = "CommSafe \n";
+                st += "Bienvenido Ciudadano \n";
+                st += "1. Iniciar Sesion\n2. Olvide mi contraseña \n3. Registro \n4. Salir";
 
+                String switch1 = inputString(st);
                 Scanner myObj = new Scanner(System.in);
-                int opcion = myObj.nextInt();
                 clrscr();
 
-                switch (opcion) 
+                switch (switch1) 
                 {
-                    case 1:
+                    case "1":
                         boolean digitandodatos = true;
                         while(digitandodatos)
                         {
                             try{
-                                System.out.println("Cedula \n ");
+                                System.out.println("Cedula");
                                 myObj = new Scanner(System.in);
                                 int cedula = myObj.nextInt();
-                                System.out.println("Contraseña");
-                                myObj = new Scanner(System.in);
-                                String contrasena = myObj.nextLine();
+                                String contrasena = inputString("Contraseña");
                                 clrscr();
-                                System.out.println("1. Confirmar Sesion \n 2. Cancelar Sesion");
-                                myObj = new Scanner(System.in);
-                                int op = myObj.nextInt();
+                                
+                                String op = inputString("1. Confirmar Sesion \n2. Cancelar Sesion");
                                 clrscr();
 
-                                if(op == 1)
+                                if(op.equals("1"))
                                 {
-
+                                    //realiza la validación de los datos para iniciar sesión.
                                     Ciudadano c = registros.validacion(cedula,contrasena);
 
                                     if(c == null)
@@ -76,36 +79,40 @@ public class CommSafe
 
                                     {  
                                         boolean s = true;
-                                        digitandodatos = false;
+                                        //Se vuelve false para poder volver al primer menu cuando decida cerrar sesión.
+                                        digitandodatos = false; 
                                         sesion.put(c,"cumbre"); //añade la ubicación actual
 
                                         while(s){
 
-                                            System.out.println("Menu Barra");
-                                            System.out.println("1. Ver publicaciones \n2. Agregar Publicacion \n3. Perfil \n4. Cerrar sesion");
-                                            myObj = new Scanner(System.in);
-                                            int op1 = myObj.nextInt();
+                                            String mb = "Menu Barra \n";
+                                            mb += "1. Ver publicaciones \n2. Agregar Publicacion \n3. Perfil \n4. Cerrar sesion";
+                                            String switch2 = inputString(mb);
                                             clrscr();
 
-                                            switch(op1)
+                                            switch(switch2)
                                             {
-                                                case 1: // Lista de publicaciones (Muro)
+                                                case "1": // Lista de publicaciones (Muro)
                                                     ArrayList<Ciudadano> ciudadanos = registros.getCuidadanos();
                                                     ArrayList<Post> Muro = new ArrayList<>();
-                                                    for(Ciudadano iterar: ciudadanos )
-                                                    {
-                                                        ArrayList<Post> publicaciones = iterar.getPost();
-                                                        for (Post iterar1: publicaciones)
-                                                        {   String ubicacionactual = "";
-                                                            for (Ciudadano oper6 : sesion.keySet()) 
+                                                    String ubicacionactual = "";
+                                                    
+                                                    //Obtiene la ubicación de la sesion
+                                                    for (Ciudadano oper6 : sesion.keySet()) 
                                                             {
                                                                 if(oper6.getCedula() == cedula)
                                                                 {
                                                                     ubicacionactual = sesion.get(oper6);
                                                                 }
 
-                                                            }
-
+                                                    }
+                                                    
+                                                    //Muestra todos las publicaciones de la ubicación actual 
+                                                    for(Ciudadano iterar: ciudadanos )
+                                                    {
+                                                        ArrayList<Post> publicaciones = iterar.getPost();
+                                                        for (Post iterar1: publicaciones)
+                                                        {                                                              
                                                             if(ubicacionactual.equals(iterar1.getUbicacion()) )
                                                             {
                                                                 Muro.add(iterar1); 
@@ -117,29 +124,21 @@ public class CommSafe
                                                     {
                                                         iterar2.showPost();
                                                     }
-                                                    System.out.println("Presione cualquier tecla para volver"); 
-                                                    myObj = new Scanner(System.in);
-                                                    String op4 = myObj.nextLine();                                            
+                                                    inputString("Presione cualquier tecla para volver");                                            
                                                     clrscr();
                                                     break;
-                                                case 2:// añadir post
-                                                    System.out.println("Por favor agrega una  Descripcion"); 
-                                                    myObj = new Scanner(System.in);
-                                                    String op5 = myObj.nextLine();   
+                                                case "2":// añadir post
+                                                    String desc = inputString("Por favor agrega una  Descripcion: \n");   
 
                                                     for (Ciudadano oper7 : sesion.keySet()) 
                                                     {
                                                         if(oper7.getCedula() == cedula)
                                                         {
-                                                            Post oper8 = oper7.addPost(op5,sesion.get(oper7));
-                                                            System.out.println("¿Desea agregar archivo multimedia? \n1. SI \n2. NO");
-                                                            myObj = new Scanner(System.in);
-                                                            String op9 = myObj.nextLine();  
+                                                            Post oper8 = oper7.addPost(desc,sesion.get(oper7));
+                                                            String op9 = inputString("¿Desea agregar archivo multimedia? \n1. SI \n2. NO");   
                                                             if(op9.equals("1"))
                                                             {
-                                                                System.out.println("Agrege ruta del archivo multimedia");
-                                                                myObj = new Scanner(System.in);
-                                                                String op10 = myObj.nextLine();
+                                                                String op10 = inputString("Agrege ruta del archivo multimedia: \n");
                                                                 oper8.setMultimedia(op10);
                                                             }
                                                         }
@@ -150,10 +149,10 @@ public class CommSafe
 
                                                     break;
 
-                                                case 3:// mostrar perfil
+                                                case "3":// mostrar perfil
                                                     boolean verperfil = true;
                                                     do{
-                                                        System.out.println("1. Eliminar  |  2. Modificar  | 3. Salir");
+                                                        
                                                         Ciudadano cp = null;
                                                         for (Ciudadano oper11 : sesion.keySet()) 
                                                         {
@@ -163,14 +162,12 @@ public class CommSafe
                                                             }
 
                                                         }
-                                                        myObj = new Scanner(System.in);
-                                                        String op13 = myObj.nextLine();
+                                                        String op13 = inputString("1. Eliminar  |  2. Modificar  | 3. Salir");
                                                         switch(op13)
                                                         {
                                                             case "1":// eliminar post
-                                                                System.out.println("Escriba el id de la publicacion que quiere borrar"); 
-                                                                myObj = new Scanner(System.in);
-                                                                String op14 = myObj.nextLine();
+                                                                System.out.println(); 
+                                                                String op14 = inputString("Escriba el id de la publicacion que quiere borrar:");
                                                                 int cast = Integer.parseInt(op14);
                                                                 cp.eliminarPost(cast);
 
@@ -204,16 +201,14 @@ public class CommSafe
                                                                 break;
 
                                                         }
-                                                        System.out.println("Presione cualquier tecla para volver"); 
-                                                        myObj = new Scanner(System.in);
-                                                        String op12 = myObj.nextLine();                                            
+                                                                                                    
                                                         clrscr();
                                                     }
                                                     while(verperfil);
 
                                                     break;
 
-                                                case 4: // cerrar sesion
+                                                case "4": // cerrar sesion
                                                    
                                                   s = false;
                                                     
@@ -237,9 +232,9 @@ public class CommSafe
                         }
                         break;
 
-                    case 2:
+                    case "2":  //Olvide mi contraseña
                         break;
-                    case 3:
+                    case "3":  //Registro
                         ArrayList<String> datos = new ArrayList<>();
                         datos.add("Nombres");
                         datos.add("Apellidos");
@@ -275,7 +270,7 @@ public class CommSafe
 
                         break;
 
-                    case 4:
+                    case "4":  //Salir
                         inicio = false;
                         break;
                 }
