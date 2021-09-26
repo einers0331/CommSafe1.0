@@ -23,11 +23,17 @@ public class CommSafe
                 Runtime.getRuntime().exec("clear");
         } catch (IOException | InterruptedException ex) {}
     }
-    
+
     public static String inputString(String str){
         System.out.println(str);
         Scanner myObj = new Scanner(System.in);
         return myObj.nextLine();
+    }
+
+    public static int inputInt(String str){
+        System.out.println(str);
+        Scanner myObj = new Scanner(System.in);
+        return myObj.nextInt();
     }
 
     public static void main(String[] args) 
@@ -41,14 +47,14 @@ public class CommSafe
         while(inicio)
         {
             try{
-                String st = "CommSafe \n";
+                String st = "------CommSafe------ \n";
                 st += "Bienvenido Ciudadano \n";
                 st += "1. Iniciar Sesion\n2. Olvide mi contraseña \n3. Registro \n4. Salir";
 
                 String switch1 = inputString(st);
                 Scanner myObj = new Scanner(System.in);
                 clrscr();
-
+                //menu inicial
                 switch (switch1) 
                 {
                     case "1":
@@ -56,12 +62,12 @@ public class CommSafe
                         while(digitandodatos)
                         {
                             try{
-                                System.out.println("Cedula");
+                                System.out.println("Cedula:");
                                 myObj = new Scanner(System.in);
                                 int cedula = myObj.nextInt();
-                                String contrasena = inputString("Contraseña");
+                                String contrasena = inputString("Contraseña:");
                                 clrscr();
-                                
+
                                 String op = inputString("1. Confirmar Sesion \n2. Cancelar Sesion");
                                 clrscr();
 
@@ -75,7 +81,7 @@ public class CommSafe
                                         System.out.println("Error en la autenticación \n");
                                     }
 
-                                    else
+                                    else  //La validación es correcta
 
                                     {  
                                         boolean s = true;
@@ -85,7 +91,7 @@ public class CommSafe
 
                                         while(s){
 
-                                            String mb = "Menu Barra \n";
+                                            String mb = "--------Menu Barra-------- \n";
                                             mb += "1. Ver publicaciones \n2. Agregar Publicacion \n3. Perfil \n4. Cerrar sesion";
                                             String switch2 = inputString(mb);
                                             clrscr();
@@ -93,20 +99,20 @@ public class CommSafe
                                             switch(switch2)
                                             {
                                                 case "1": // Lista de publicaciones (Muro)
-                                                    ArrayList<Ciudadano> ciudadanos = registros.getCuidadanos();
-                                                    ArrayList<Post> Muro = new ArrayList<>();
-                                                    String ubicacionactual = "";
-                                                    
+
+                                                    String ubicacionactual = "";                                                   
                                                     //Obtiene la ubicación de la sesion
                                                     for (Ciudadano oper6 : sesion.keySet()) 
-                                                            {
-                                                                if(oper6.getCedula() == cedula)
-                                                                {
-                                                                    ubicacionactual = sesion.get(oper6);
-                                                                }
+                                                    {
+                                                        if(oper6.getCedula() == cedula)
+                                                        {
+                                                            ubicacionactual = sesion.get(oper6);
+                                                        }
 
                                                     }
-                                                    
+
+                                                    ArrayList<Ciudadano> ciudadanos = registros.getCuidadanos();
+                                                    ArrayList<Post> Muro = new ArrayList<>();
                                                     //Muestra todos las publicaciones de la ubicación actual 
                                                     for(Ciudadano iterar: ciudadanos )
                                                     {
@@ -152,7 +158,7 @@ public class CommSafe
                                                 case "3":// mostrar perfil
                                                     boolean verperfil = true;
                                                     do{
-                                                        
+
                                                         Ciudadano cp = null;
                                                         for (Ciudadano oper11 : sesion.keySet()) 
                                                         {
@@ -162,7 +168,7 @@ public class CommSafe
                                                             }
 
                                                         }
-                                                        String op13 = inputString("1. Eliminar  |  2. Modificar  | 3. Salir");
+                                                        String op13 = inputString("1. Eliminar  |  2. Modificar Post  | 3.Modificar Perfil 4. Salir");
                                                         switch(op13)
                                                         {
                                                             case "1":// eliminar post
@@ -172,36 +178,94 @@ public class CommSafe
                                                                 cp.eliminarPost(cast);
 
                                                                 break;
-                                                            case "2"://modificar perfil
-                                                                System.out.println("Escriba el id de la publicacion que quiere modificar"); 
-                                                                myObj = new Scanner(System.in);
-                                                                String op15 = myObj.nextLine();
+                                                            case "2"://modificar perfil    
+                                                                boolean modificando = true;
+
+                                                                String op15 = inputString("Escriba el id de la publicacion que quiere modificar");
                                                                 int cast1 = Integer.parseInt(op15);
+                                                                while(modificando){
 
-                                                                System.out.println("Desea modificar la descripción  \n 1. SI \n 2. NO");
-                                                                String op16 = new Scanner(System.in).nextLine();
-                                                                if(op16.equals("1")){
-                                                                    System.out.println("Escriba una nueva descripción");
-                                                                    op16 = new Scanner(System.in).nextLine();
-                                                                    cp.getPost().get(cast1 -1).setDescripcion(op16);
-                                                                }
-                                                                System.out.println("Desea modificar la multimedia  \n 1. SI \n 2. NO");
-                                                                op16 = new Scanner(System.in).nextLine();
-                                                                if(op16.equals("1")){
-                                                                    System.out.println("Escriba la ruta del archivo multimedia");
-                                                                    op16 = new Scanner(System.in).nextLine();
-                                                                    cp.getPost().get(cast1 -1).setMultimedia(op16);
-                                                                }
+                                                                    String modi = "Que desea modificar?: \n";
+                                                                    modi += "1. Descripción \n";
+                                                                    modi += "2. Multimedia \n";
+                                                                    modi += "3. Volver \n";
 
+                                                                    String modst = inputString(modi);
+
+                                                                    switch(modst){
+                                                                        case "1":
+                                                                            String op16 = inputString("Escriba una nueva descripción");
+                                                                            cp.getPost().get(cast1 -1).setDescripcion(op16);
+                                                                            break;
+                                                                        case "2":
+                                                                            String op17 = inputString("Escriba la ruta del archivo multimedia");
+                                                                            cp.getPost().get(cast1 -1).setMultimedia(op17);
+                                                                            break;
+                                                                        case "3":
+                                                                            modificando = false;
+                                                                            break;
+                                                                        default:
+                                                                            System.out.println("Escriba una opción valida");
+                                                                            break;
+                                                                    }
+                                                                }
                                                                 break;
-                                                            case "3":// retorna al menu anterior
+                                                            case "3":
+                                                                String opcstr = "Que dato desea modificar: \n";
+                                                                opcstr += "1. nombre \n";
+                                                                opcstr += "2. apellido \n";
+                                                                opcstr += "3. contraseña \n";
+                                                                opcstr += "4. cedula \n";
+                                                                opcstr += "5. celular \n";
+                                                                opcstr += "6. dirección \n";
+                                                                opcstr += "7. ciudad \n";
+                                                                opcstr += "8. foto \n";
+                                                                String opc  = inputString(opcstr);
+
+                                                                cp = null;
+                                                                for (Ciudadano oper11 : sesion.keySet()) 
+                                                                {
+                                                                    if(oper11.getCedula() == cedula)
+                                                                    {   
+                                                                        cp = oper11;
+                                                                    }
+
+                                                                }
+                                                                switch(opc){
+                                                                    case "1":
+                                                                        cp.setNombre(inputString("Ingrese el nombre:"));
+                                                                        break;
+                                                                    case "2":
+                                                                        cp.setApellido(inputString("Ingrese el apellido:"));
+                                                                        break;
+                                                                    case "3":
+                                                                        cp.setContrasena(inputString("Ingrese la contraseña:"));
+                                                                        break;
+                                                                    case "4":
+                                                                        cp.setCedula(inputInt("Ingrese la cedula:"));
+                                                                        break;
+                                                                    case "5":
+                                                                        cp.setCelular(inputInt("Ingrese su número de celular:"));
+                                                                        break;
+                                                                    case "6":
+                                                                        cp.setDireccion(inputString("Ingrese su dirección:"));
+                                                                        break;
+                                                                    case "7":
+                                                                        cp.setCiudad(inputString("Ingrese su ciudad:"));
+                                                                        break;
+                                                                    case "8":
+                                                                        cp.setFoto(inputString("Ingrese la ruta del archivo:"));
+                                                                        break;
+
+                                                                }
+                                                            case "4":// retorna al menu anterior
 
                                                                 verperfil = false;
 
                                                                 break;
 
                                                         }
-                                                                                                    
+
                                                         clrscr();
                                                     }
                                                     while(verperfil);
@@ -209,13 +273,10 @@ public class CommSafe
                                                     break;
 
                                                 case "4": // cerrar sesion
-                                                   
-                                                  s = false;
-                                                    
 
+                                                    s = false;
 
                                                     break;
-
                                             }
                                         }
                                     }

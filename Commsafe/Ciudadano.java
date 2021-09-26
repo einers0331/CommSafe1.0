@@ -41,25 +41,43 @@ public class Ciudadano
     public String getNombre(){
         return this.nombre;
     }
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
     
     public String getApellido(){
         return this.apellido;
+    }
+    public void setApellido(String apellido){
+        this.apellido = apellido;
     }
     
     public int getCedula(){
         return this.cedula;
     }
+    public void setCedula(int cedula){
+        this.cedula = cedula;
+    }
     
     public int getCelular(){
         return this.celular;
+    }
+    public void setCelular(int celular){
+        this.celular = celular;
     }
     
     public String getDireccion(){
         return this.direccion;
     }
+    public void setDireccion(String direccion){
+        this.direccion = direccion;
+    }
     
      public String getContrasena(){
         return this.contrasena;
+    }
+    public void setContrasena(String contrasena){
+        this.contrasena = contrasena;
     }
     
     //Establece una ruta con la imagen
@@ -76,6 +94,9 @@ public class Ciudadano
     
      public String getCiudad(){
         return this.ciudad;
+    }
+    public void setCiudad(String ciudad){
+        this.ciudad = ciudad;
     }
     
     public void setPerfil(){
@@ -100,7 +121,7 @@ public class Ciudadano
         if (foto != null){
             perfil += "               "+ foto + "\n";
         }
-        perfil += "          " + nombre + " " + apellido + "\n";
+        perfil += "------------" + nombre + " " + apellido + "------------\n";
         
         System.out.println(perfil);
         

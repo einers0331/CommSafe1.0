@@ -53,9 +53,9 @@ public class Post
     }
     
     public void showPost(){
-        String info = "------------------------------------------------------ \n";
-        info +=  identificador + " |      " + nombreC + "|"+"    "+ ubicacion +"      |      " + datetime + "|\n";
-        info += "------------------------------------------------------- \n\n";
+        String info = "---------------------------------------------------------- \n";
+        info +=  identificador + " |      " + nombreC + "|"+"    "+ ubicacion +"      |      " + datetime + " |\n";
+        info += "---------------------------------------------------------- \n\n";
         info += descripcion + "\n\n";
         if(multimedia != null){
             info += multimedia;
